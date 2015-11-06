@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Customer Complaints</title>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="Content/bootstrap-flipped.min.css" rel="stylesheet"/>
+    <link href='http://awebfont.ir/css?id=1116' rel='stylesheet' type='text/css'>
+    <link href='http://awebfont.ir/css?id=1047' rel='stylesheet' type='text/css'>
+</head>
+<body class="container" ng-controller="myController" ng-cloak style="font-family: 'B Yekan', tahoma, Arial;">
+    <!--<div>
+        content from <br />
+        <p>http://www.codeproject.com/Articles/884647/Web-app-using-Web-API-SignalR-and-AngularJS</p>
+    </div>-->
+    <div class="jumbotron page-title col-sm-7">
+        <h2 style="font-family: 'B Koodak', tahoma, Arial;">جستجوی شکايات مشتری</h2>
+    </div>
+    <div class="panel panel-success col-sm-7">
+        <div class="row">
+            <div >
+                <form class="form-inline">
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="text" ng-model="customerId" placeholder="شماره مشتری" />
+                        </div>
+                        <input class="btn btn-primary" type="button" value="جستجو" ng-click="getAllFromCustomer()" />
+                        <p ng-show="errorToSearch">{{errorToSearch}}</p>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div ng-show="toShow()">
+            <table class="table table-condensed">
+                <colgroup>
+                    <col class="col-md-1" />
+                    <col class="col-md-3" />
+                    <col class="col-md-2" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>شماره شکايت</th>
+                        <th>شرح</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="complaint in complaints | orderBy:orderProp">
+                        <td>{{complaint.id}}</td>
+                        <td>{{complaint.description}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-info" ng-click="editIt(complaint)">
+                                    ويرايش
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </button>
+                                <button class="btn btn-danger" ng-click="deleteOne(complaint)">
+                                    <i class="glyphicon glyphicon-trash"></i> حذف
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default col-md-7">
+        <div class="panel-title">
+            <h2>افزودن شکايت</h2>
+        </div>
+        <div class="panel-body">
+            <input type="text" ng-model="descToAdd" size="40" placeholder="شرح" />
+            <input class="btn btn-success" type="button" value="افزودن" ng-click="postOne()" />
+        </div>
+        <p ng-show="errorToAdd">{{errorToAdd}}</p>
+    </div>
+
+    <div class="panel panel-default col-md-7">
+        <div class="panel-title">
+            <h2>ويرايش شکايت</h2>
+        </div>
+        <div class="panel-body">
+            <p>شماره شکايت: {{idToUpdate}}</p>
+            <input type="text" ng-model="descToUpdate" size="40" placeholder="شرح" />
+            <input class="btn btn-success" type="button" value="ذخيره" ng-click="putOne();" />
+        </div>
+        <p ng-show="errorToUpdate">{{errorToAdd}}</p>
+    </div>
+
+
+    <script src="Scripts/jquery-2.1.4.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-resource.min.js"></script>
+    <script src="signalr/hubs"></script>
+    <script src="app/app.js"></script>
+</body>
+</html>
