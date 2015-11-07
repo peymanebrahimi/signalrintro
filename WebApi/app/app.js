@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    var app = angular.module('app', []);
+    var app = angular.module('app', ['ui.bootstrap', 'ui.bootstrap.persian.datepicker']);
     var uri = 'api/complaints';
     var errorMessage = function (data, status) {
         return 'Error: ' + status + (data.message !== undefined ? (' ' + data.message) : '');
@@ -109,7 +109,7 @@
                 for (var i = array.length - 1; i >= 0; i--) {
                     if (array[i].id === item.id) {
                         array.splice(i, 1);
-                        
+
                     }
                 }
                 $scope.$apply();
@@ -128,6 +128,27 @@
             };
 
             $.connection.hub.start(); // connect to signalr hub
+
+            $scope.openPersian = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.persianIsOpen = true;
+                $scope.gregorianIsOpen = false;
+            };
+            $scope.openGregorian = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.gregorianIsOpen = true;
+                $scope.persianIsOpen = false;
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 6
+            };
+
         }
     ]);
 }());
